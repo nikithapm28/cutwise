@@ -90,7 +90,7 @@
   }
 }
 
-/* Keep existing page utilities aligned with the shared green palette. */
+/* Keep existing page utilities aligned with the shared warm palette. */
 @layer utilities {
   .bg-white, .bg-\[\#FFFFFF\] { background-color: hsl(var(--card)) !important; }
   .bg-\[\#F4F7F5\], .bg-\[\#DCFCE7\], .bg-emerald-50 { background-color: var(--theme-tint) !important; }
