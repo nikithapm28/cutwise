@@ -83,17 +83,12 @@ export default function Header({ onToggleAssistant }) {
       <div className="flex items-center gap-4 min-w-0">
         <div className="min-w-0">
           <div className="text-[11px] uppercase tracking-wider text-[#64748B] font-semibold">
-            {isWorkspace ? `Step ${String(step).padStart(2, '0')} · ${STEP_TITLES[step]}` : 'ScrapSmart'}
+            {isWorkspace ? `Step ${String(step).padStart(2, '0')} · ${STEP_TITLES[step]}` : 'CutWise'}
           </div>
           <div className="font-display font-semibold text-[#172B21] truncate">{projectName}</div>
         </div>
-<<<<<<< HEAD
         <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#fff4d3] text-[#5a3a09] text-xs font-semibold">
           <span className="w-2 h-2 rounded-full bg-[#d4a63a]" />
-=======
-        <div className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#DCFCE7] text-[#15803D] text-xs font-semibold">
-          <span className="w-2 h-2 rounded-full bg-[#16A34A]" />
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
           {matDef.name} · {material.sheetWidth}×{material.sheetHeight}mm
         </div>
       </div>
@@ -121,20 +116,12 @@ export default function Header({ onToggleAssistant }) {
         >
           <HelpCircle className="w-4 h-4" />
         </button>
-<<<<<<< HEAD
         <div className="w-9 h-9 rounded-full bg-[#2b1d08] text-white flex items-center justify-center text-xs font-semibold" title="Guest">
-=======
-        <div className="w-9 h-9 rounded-full bg-[#123D26] text-white flex items-center justify-center text-xs font-semibold" title="Guest">
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
           <User className="w-4 h-4" />
         </div>
         <button
           onClick={onToggleAssistant}
-<<<<<<< HEAD
           className="ml-1 flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold bg-[#d4a63a] text-black hover:bg-[#c2901f] transition-colors"
-=======
-          className="ml-1 flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold bg-[#16A34A] text-white hover:bg-[#15803D] transition-colors"
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
         >
           <Sparkles className="w-4 h-4" />
           <span className="hidden sm:inline">AI</span>

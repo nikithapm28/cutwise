@@ -48,7 +48,7 @@ export default function Settings() {
         <section className={`${cardClass} overflow-hidden`}>
           <span className="absolute inset-y-0 left-0 w-1 rounded-l-2xl bg-gradient-to-b from-[#34A99D] to-[#256B55]" aria-hidden="true" />
           <div className="mb-4"><SectionHeading icon={Sparkles}>AI &amp; Voice</SectionHeading></div>
-          <p className="mb-4 text-xs leading-relaxed text-muted-foreground">The ScrapSmart AI assistant uses a server-side language model with your live project context. Voice output uses your browser's speech synthesis; voice input uses the browser's speech recognition where available.</p>
+          <p className="mb-4 text-xs leading-relaxed text-muted-foreground">The CutWise AI assistant uses a server-side language model with your live project context. Voice output uses your browser's speech synthesis; voice input uses the browser's speech recognition where available.</p>
           <div className="space-y-3">
             {voiceControls.map(({ label, icon: Icon, enabled, setEnabled, supported }) => (
               <div key={label} className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border/70 bg-background/60 px-4 py-3">
@@ -102,8 +102,8 @@ export default function Settings() {
             <Info className="h-4 w-4" aria-hidden="true" />
           </span>
           <div className="text-sm text-[#12332A] dark:text-[#E8F3EC]">
-            <p className="mb-1 font-semibold">About ScrapSmart</p>
-            ScrapSmart is a material cutting optimization demo. The optimizer is a real MaxRects-BSSF packer. All utilization, waste, and cost figures are computed from the validated layout — nothing is hardcoded.
+            <p className="mb-1 font-semibold">About CutWise</p>
+            CutWise is a material cutting optimization demo. The optimizer is a real MaxRects-BSSF packer. All utilization, waste, and cost figures are computed from the validated layout — nothing is hardcoded.
           </div>
         </section>
       </div>

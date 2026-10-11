@@ -29,16 +29,12 @@ const LANGUAGES = [
 ];
 const bcp47 = (code) => LANGUAGES.find((l) => l.code === code)?.bcp47 || 'en-US';
 
-<<<<<<< HEAD
 const INITIAL_MESSAGES = [
   {
     role: 'assistant',
-    text: "Hi! I'm ScrapSmart AI. What would you like to know about your layout?",
+    text: "Hi! I'm CutWise AI. What would you like to know about your layout?",
   },
 ];
-=======
-const INITIAL_MESSAGES = [];
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
 
 function RobotMascot({ size = 40, className = '' }) {
   return (
@@ -124,7 +120,6 @@ function localAnswer(question, ctx, language) {
   const n1 = (v) => (typeof v === 'number' ? v.toFixed(1) : '?');
   const money = (v) => (typeof v === 'number' ? `$${v.toFixed(2)}` : '?');
   const needRun = 'Run the optimizer first and I can use your real numbers for this.';
-<<<<<<< HEAD
   const totalPieces = pieces.reduce((total, piece) => total + (Number(piece.quantity) || 0), 0);
   const pieceList = pieces.slice(0, 4).map((piece) => `${piece.quantity || 1} × ${piece.name} (${piece.width}×${piece.height} mm)`).join(', ');
   const projectDetails = [
@@ -145,14 +140,8 @@ function localAnswer(question, ctx, language) {
     out = `${projectDetails} I'd start by checking the quantities and material, then review the layout for unplaced parts before staging sheets. Use the layout as a placement guide; it isn't a validated saw-by-saw cutting sequence. I don't have your delivery dates or shop schedule, but I can help plan around them if you share those details.`;
   } else if (/\b(can|could|would)\s+(you|u)\s+(?:(?:please|pls)\s+)?(help|assist)\b|\bhelp me (with|plan|understand)\b|\bneed help with\b/.test(q)) {
     out = `Sure. I can help you plan the cut list, choose material, or make sense of the layout. ${projectDetails} What are you working on?`;
-=======
-  let out;
-
-  if (/^(hi|hello|hey|hola|bonjour|hallo|ciao|namaste)\b/.test(q)) {
-    out = `Hello! I'm ScrapSmart AI. I can explain your waste, kerf, rotation, sheet size and cost${s ? `. Right now your layout uses ${s.sheetsUsed} sheet(s) at ${n1(s.utilization)}% utilization` : ''}. What would you like to know?`;
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
   } else if (has('kerf')) {
-    out = `Kerf is the width of material the saw blade removes with each cut. ScrapSmart reserves ${m.kerf ?? 0} mm between pieces for it, so parts come out the right size instead of slightly small.`;
+    out = `Kerf is the width of material the saw blade removes with each cut. CutWise reserves ${m.kerf ?? 0} mm between pieces for it, so parts come out the right size instead of slightly small.`;
   } else if (has('rotat')) {
     const sp = ctx.selectedPiece;
     out = sp
@@ -184,11 +173,7 @@ function localAnswer(question, ctx, language) {
       ? `Your layout uses ${s.sheetsUsed} sheet(s) of ${m.sheetWidth} by ${m.sheetHeight} mm. ${s.placedCount} pieces are placed and ${s.unplacedCount} are not. Utilization is ${n1(s.utilization)}%, waste is ${n1(s.waste)}%, and the material cost is ${money(s.totalCost)}. Kerf is ${m.kerf ?? 0} mm and the edge margin is ${m.edgeMargin ?? 0} mm.`
       : needRun;
   } else {
-<<<<<<< HEAD
     out = `I can help you work through this. ${projectDetails} What are you trying to figure out?`;
-=======
-    out = `I can answer questions about your waste, kerf, rotation, sheet size, cost and savings${s ? ` (your layout uses ${s.sheetsUsed} sheet(s) at ${n1(s.utilization)}% utilization)` : ''}. Try asking: "How can I reduce waste?" or "How much material am I saving?"`;
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
   }
   return out;
 }
@@ -218,11 +203,7 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
   const chatDownUntil = useRef(0);  // chat backend considered down until this time
   const voiceDownUntil = useRef(0); // ElevenLabs voice considered down until this time
   const isChatOffline = () => OFFLINE || Date.now() < chatDownUntil.current;
-<<<<<<< HEAD
   const isVoiceOffline = () => OFFLINE || Date.now() < voiceDownUntil.current;
-=======
-  const isVoiceOffline = () => OFFLINE || Date.now() < voiceDownUntil.current || Date.now() < chatDownUntil.current;
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
 
   useEffect(() => { loadingRef.current = loading; }, [loading]);
 
@@ -313,15 +294,11 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
       .then((res) => {
         if (id !== speakIdRef.current) return; // user muted / sent something newer
         const audio = res?.data?.audio;
-<<<<<<< HEAD
         if (!audio) {
           voiceDownUntil.current = Date.now() + RETRY_MS;
           speakWithBrowser();
           return;
         }
-=======
-        if (!audio) { speakWithBrowser(); return; }
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
         voiceDownUntil.current = 0; // ElevenLabs is working
         const el = new Audio(`data:${res.data.mimeType || 'audio/mpeg'};base64,${audio}`);
         el.onended = () => id === speakIdRef.current && setSpeaking(false);
@@ -331,7 +308,7 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
         el.play().catch(speakWithBrowser);
       })
       .catch((e) => {
-        console.warn('[ScrapSmart AI] ElevenLabs voice unavailable, using browser voice:', errorText(e));
+        console.warn('[CutWise AI] ElevenLabs voice unavailable, using browser voice:', errorText(e));
         voiceDownUntil.current = Date.now() + RETRY_MS;
         speakWithBrowser();
       });
@@ -373,11 +350,10 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
         history,
         context: buildContext(),
       });
-<<<<<<< HEAD
       const reply = typeof res?.data?.reply === 'string' ? res.data.reply.trim() : '';
       if (!reply) {
         chatDownUntil.current = Date.now() + RETRY_MS;
-        console.warn('[ScrapSmart AI] Chat service returned no reply; switching to offline answers:', res?.data?.error || 'empty reply');
+        console.warn('[CutWise AI] Chat service returned no reply; switching to offline answers:', res?.data?.error || 'empty reply');
         const local = localAnswer(msg, buildContext(), language);
         setMessages((m) => [...m, { role: 'assistant', text: local }]);
         speak(local, language);
@@ -386,16 +362,9 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
       chatDownUntil.current = 0; // a valid reply means the service is online again
       setMessages((m) => [...m, { role: 'assistant', text: reply }]);
       speak(reply, language);
-=======
-      chatDownUntil.current = 0; // the service answered: online again
-      const isErr = !res?.data?.reply;
-      const reply = res?.data?.reply || res?.data?.error || "I couldn't get an answer right now. Please try again.";
-      setMessages((m) => [...m, { role: 'assistant', text: reply, error: isErr }]);
-      if (!isErr) speak(reply, language);
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
     } catch (e) {
-      console.error('[ScrapSmart AI] chat failed:', e);
-      console.warn('[ScrapSmart AI] AI service unavailable, answering offline:', errorText(e));
+      console.error('[CutWise AI] chat failed:', e);
+      console.warn('[CutWise AI] AI service unavailable, answering offline:', errorText(e));
       chatDownUntil.current = Date.now() + RETRY_MS;
       const local = localAnswer(msg, buildContext(), language);
       setMessages((m) => [
@@ -453,7 +422,7 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
       setTranscribing(false);
       sendRef.current?.(transcript, lang);
     } catch (e) {
-      console.warn('[ScrapSmart AI] transcription unavailable, using browser recognition:', errorText(e));
+      console.warn('[CutWise AI] transcription unavailable, using browser recognition:', errorText(e));
       voiceDownUntil.current = Date.now() + RETRY_MS;
       setTranscribing(false);
       setMessages((c) => [...c, { role: 'assistant', text: 'Sorry, please say that once more.' }]);
@@ -496,7 +465,7 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
       recorder.start();
       setListening(true);
     } catch (e) {
-      console.warn('[ScrapSmart AI] mic setup failed, using browser recognition:', e);
+      console.warn('[CutWise AI] mic setup failed, using browser recognition:', e);
       voiceDownUntil.current = Date.now() + RETRY_MS;
       releaseMic();
       startBrowserRecognition();
@@ -528,22 +497,12 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
 
   return (
     <>
-<<<<<<< HEAD
       {!open && showLauncher && (
         <>
           {showWelcomePopup && (
             <div className="fixed bottom-20 left-4 sm:bottom-24 sm:left-5 z-[60] max-w-[260px] rounded-2xl border border-[#b9891a] bg-[#d4a63a] px-4 py-3 text-sm text-black shadow-[0_20px_55px_rgba(76,58,15,0.35)] animate-[fadeIn_0.25s_ease-out] dark:border-[#e3bd58] dark:bg-[#d4a63a] dark:text-black">
               <div className="flex items-center gap-3">
                 <div className="flex items-center justify-center rounded-full bg-[#f5de9a] ring-2 ring-[#8a6415]/80 p-1">
-=======
-      {/* Floating launcher (bottom-right, so it never covers the top-right toolbar) */}
-      {!open && showLauncher && (
-        <>
-          {showWelcomePopup && (
-            <div className="fixed bottom-20 left-4 sm:bottom-24 sm:left-5 z-[60] max-w-[260px] rounded-2xl border border-[#BEEAF4] bg-[#0F2D3F] px-4 py-3 text-sm text-white shadow-[0_20px_55px_rgba(15,45,63,0.45)] animate-[fadeIn_0.25s_ease-out]">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center rounded-full bg-[#163c52] ring-2 ring-[#4ACFEA]/90 p-1">
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
                   <RobotMascot size={24} className="block" />
                 </div>
                 <p className="leading-snug">
@@ -555,40 +514,24 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
 
           <button
             onClick={onToggle}
-            aria-label="Open ScrapSmart AI"
+            aria-label="Open CutWise AI"
             aria-expanded={false}
-<<<<<<< HEAD
             className="fixed bottom-4 left-4 sm:bottom-5 sm:left-5 z-50 flex items-center gap-2 pl-3 pr-4 py-3 rounded-full bg-[#d4a63a] text-black shadow-[0_18px_40px_rgba(127,98,22,0.35)] transition hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#b9891a] dark:bg-[#d4a63a] dark:text-black"
           >
             <div className="flex items-center justify-center rounded-full bg-[#f5de9a] ring-2 ring-[#8a6415]/80 shadow-inner">
-=======
-            className="fixed bottom-4 left-4 sm:bottom-5 sm:left-5 z-50 flex items-center gap-2 pl-3 pr-4 py-3 rounded-full bg-[#0B2334] text-white shadow-[0_18px_40px_rgba(17,87,110,0.4)] transition hover:scale-[1.01] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#4ACFEA]"
-          >
-            <div className="flex items-center justify-center rounded-full bg-[#0E3650] ring-2 ring-[#4ACFEA]/90 shadow-inner">
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
               <RobotMascot size={44} className="block" />
             </div>
-            <span className="font-semibold text-sm tracking-wide">ScrapSmart AI</span>
+            <span className="font-semibold text-sm tracking-wide">CutWise AI</span>
           </button>
         </>
       )}
 
-<<<<<<< HEAD
       {open && (
         <>
           {showWelcomePopup && (
             <div className="fixed z-[60] left-1/2 top-6 -translate-x-1/2 sm:left-[22rem] sm:top-8 sm:translate-x-0 rounded-2xl border border-[#b9891a] bg-[#d4a63a] px-4 py-3 text-sm text-black shadow-[0_20px_55px_rgba(76,58,15,0.35)] animate-[fadeIn_0.25s_ease-out] dark:border-[#e3bd58] dark:bg-[#d4a63a] dark:text-black">
               <div className="flex items-center gap-3">
                 <div className="flex items-center justify-center rounded-full bg-[#f5de9a] ring-2 ring-[#8a6415]/80 p-1">
-=======
-      {/* Panel: full-screen sheet on phones, anchored card from sm up */}
-      {open && (
-        <>
-          {showWelcomePopup && (
-            <div className="fixed z-[60] left-1/2 top-6 -translate-x-1/2 sm:left-[22rem] sm:top-8 sm:translate-x-0 rounded-2xl border border-[#BEEAF4] bg-[#0F2D3F] px-4 py-3 text-sm text-white shadow-[0_20px_55px_rgba(15,45,63,0.45)] animate-[fadeIn_0.25s_ease-out]">
-              <div className="flex items-center gap-3">
-                <div className="flex items-center justify-center rounded-full bg-[#163c52] ring-2 ring-[#4ACFEA]/90 p-1">
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
                   <RobotMascot size={24} className="block" />
                 </div>
                 <p className="max-w-[260px] leading-snug">
@@ -600,8 +543,7 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
 
           <div
             role="dialog"
-            aria-label="ScrapSmart AI chat"
-<<<<<<< HEAD
+            aria-label="CutWise AI chat"
             className="fixed z-50 inset-0 sm:inset-auto sm:bottom-5 sm:left-5 sm:w-[24rem] sm:h-[min(38rem,calc(100dvh-2.5rem))] bg-[#fffdf9] text-black dark:bg-[#060606] dark:text-black sm:rounded-2xl sm:border border-[#d4a63a]/80 dark:border-[#d4a63a] shadow-[0_22px_60px_rgba(90,70,18,0.25)] flex flex-col overflow-hidden"
           >
             <div className="bg-gradient-to-r from-[#d4a63a] via-[#f3ca68] to-[#b9891a] text-black px-4 py-3 pt-[max(0.75rem,env(safe-area-inset-top))] flex items-center gap-3 shrink-0 dark:text-black">
@@ -609,7 +551,7 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
                 <RobotMascot size={28} className="block" />
               </div>
               <div className="flex-1 min-w-0">
-                <div className="font-display font-bold text-sm">ScrapSmart AI</div>
+                <div className="font-display font-bold text-sm">CutWise AI</div>
                 <div className="text-[11px] text-black/75">Your workshop copilot</div>
               </div>
               <button
@@ -705,7 +647,7 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder={listening ? 'Listening…' : 'Ask about your layout…'}
-                  aria-label="Ask ScrapSmart AI"
+                  aria-label="Ask CutWise AI"
                   className="flex-1 min-w-0 px-3 py-2.5 rounded-xl border border-[#d4a63a]/70 bg-[#fffaf0] text-black placeholder:text-black/70 focus:outline-none focus:ring-2 focus:ring-[#d4a63a]/50 dark:bg-[#171717] dark:text-white dark:placeholder:text-white/75"
                 />
                 <button
@@ -719,129 +661,6 @@ export default function AIAssistant({ open, onToggle, showLauncher = true }) {
               </form>
             </div>
           </div>
-=======
-            className="fixed z-50 inset-0 sm:inset-auto sm:bottom-5 sm:left-5 sm:w-[24rem] sm:h-[min(38rem,calc(100dvh-2.5rem))] bg-white sm:rounded-2xl sm:border border-[#E2E8E4] shadow-2xl flex flex-col overflow-hidden"
-          >
-          {/* Header */}
-          <div className="bg-gradient-to-r from-[#0E3047] to-[#123D26] text-white px-4 py-3 pt-[max(0.75rem,env(safe-area-inset-top))] flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-full bg-[#0B2334] border border-[#4ACFEA]/80 flex items-center justify-center shadow-[0_0_0_3px_rgba(74,207,234,0.15)]">
-              <RobotMascot size={28} className="block" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="font-display font-bold text-sm">ScrapSmart AI</div>
-              <div className="text-[11px] text-emerald-100/80">Your workshop copilot</div>
-            </div>
-            <button
-              onClick={() => { stopSpeaking(); setMessages(INITIAL_MESSAGES); }}
-              className="p-1.5 text-white/70 hover:text-white" title="Clear chat" aria-label="Clear chat"
-            >
-              <Trash2 className="w-4 h-4" />
-            </button>
-            <button onClick={onToggle} className="p-1.5 text-white/70 hover:text-white" title="Close chat" aria-label="Close chat">
-              <X className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Messages */}
-          <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3 bg-[#F4F7F5]" aria-live="polite">
-            {messages.map((m, i) => (
-              <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`max-w-[85%] px-3.5 py-2.5 rounded-2xl text-sm whitespace-pre-wrap break-words ${m.role === 'user' ? 'bg-[#16A34A] text-white rounded-br-sm' : m.error ? 'bg-amber-50 text-amber-800 border border-amber-200 rounded-bl-sm' : 'bg-white text-[#172B21] border border-[#E2E8E4] rounded-bl-sm'}`}>
-                  {m.text}
-                </div>
-              </div>
-            ))}
-            {(loading || transcribing) && (
-              <div className="flex justify-start">
-                <div className="bg-white border border-[#E2E8E4] rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-2">
-                  {transcribing && <span className="text-xs text-[#64748B]">Transcribing…</span>}
-                  <span className="flex gap-1">
-                    <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-bounce" style={{ animationDelay: '300ms' }} />
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Suggested prompts */}
-          {messages.length <= 1 && (
-            <div className="px-3 pb-2 pt-2 flex flex-wrap gap-1.5 bg-[#F4F7F5] max-h-32 overflow-y-auto shrink-0">
-              {SUGGESTED.map((s) => (
-                <button key={s} onClick={() => send(s)} className="text-[11px] px-2.5 py-1.5 rounded-full border border-[#E2E8E4] bg-white text-[#15803D] hover:bg-[#DCFCE7] transition text-left">
-                  {s}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {/* Input */}
-          <div className="p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t border-[#E2E8E4] bg-white shrink-0">
-            <div className="flex items-center gap-1.5 mb-2">
-              <button
-                onClick={toggleMic}
-                disabled={micBusy}
-                className={`w-8 h-8 rounded-lg flex items-center justify-center transition disabled:opacity-40 ${listening ? 'bg-red-100 text-[#DC2626] animate-pulse' : 'text-[#64748B] hover:bg-[#F4F7F5]'}`}
-                title={listening ? 'Stop and send' : 'Speak your question'}
-                aria-label={listening ? 'Stop voice input' : 'Start voice input'}
-                aria-pressed={listening}
-              >
-                {transcribing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Mic className="w-4 h-4" />}
-              </button>
-
-              <button
-                onClick={toggleMute}
-                className={`w-8 h-8 rounded-lg flex items-center justify-center transition ${muted ? 'text-[#94A3B8] hover:bg-[#F4F7F5]' : 'text-[#15803D] bg-[#DCFCE7]'}`}
-                title={muted ? 'Turn on spoken replies' : 'Turn off spoken replies'}
-                aria-label={muted ? 'Turn on spoken replies' : 'Turn off spoken replies'}
-                aria-pressed={!muted}
-              >
-                {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-              </button>
-
-              {speaking && (
-                <button
-                  onClick={stopSpeaking}
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-[#DC2626] hover:bg-red-50 transition"
-                  title="Stop speaking" aria-label="Stop speaking"
-                >
-                  <Square className="w-3.5 h-3.5 fill-current" />
-                </button>
-              )}
-
-              <select
-                value={lang}
-                onChange={(e) => setLang(e.target.value)}
-                aria-label="Chat language"
-                title="Language for questions and answers"
-                className="ml-auto text-xs border border-[#E2E8E4] rounded-lg px-2 py-1.5 text-[#64748B] bg-white focus:outline-none focus:ring-2 focus:ring-[#16A34A]/30"
-              >
-                {LANGUAGES.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
-              </select>
-            </div>
-
-            <form onSubmit={(e) => { e.preventDefault(); send(); }} className="flex items-center gap-2">
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={listening ? 'Listening…' : 'Ask about your layout…'}
-                aria-label="Ask ScrapSmart AI"
-                className="flex-1 min-w-0 px-3 py-2.5 rounded-xl border border-[#E2E8E4] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#16A34A]/30"
-              />
-              <button
-                type="submit"
-                disabled={loading || !input.trim()}
-                aria-label="Send message"
-                className="w-10 h-10 shrink-0 rounded-xl bg-[#16A34A] text-white flex items-center justify-center hover:bg-[#15803D] disabled:opacity-40"
-              >
-                <Send className="w-4 h-4" />
-              </button>
-            </form>
-          </div>
-        </div>
->>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
         </>
       )}
     </>

@@ -1,4 +1,4 @@
-// Unified cutting optimizer interface for ScrapSmart.
+// Unified cutting optimizer interface for CutWise.
 // Provides Strategy A (Most Efficient), Strategy B (Fastest), and Baseline (Row/Shelf).
 
 import { optimizeEfficient } from './efficientOptimizer.js';

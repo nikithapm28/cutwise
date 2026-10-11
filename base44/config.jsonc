@@ -1,5 +1,5 @@
 {
-  "name": "scrapsmart-main",
+  "name": "cutwise-main",
   "visibility": "public",
   "site": {
     "buildCommand": "npm run build",

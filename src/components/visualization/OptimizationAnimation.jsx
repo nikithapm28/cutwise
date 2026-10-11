@@ -121,7 +121,7 @@ export default function OptimizationAnimation({ height = 380 }) {
       </div>
 
       <div className="mt-2 text-xs text-[#64748B] bg-[#F4F7F5] rounded-lg px-3 py-2 min-h-[40px]">
-        {step === 0 ? 'Press Play to watch how ScrapSmart places each piece on the sheet.' : EDU[Math.max(0, eduIndex)]}
+        {step === 0 ? 'Press Play to watch how CutWise places each piece on the sheet.' : EDU[Math.max(0, eduIndex)]}
       </div>
     </div>
   );

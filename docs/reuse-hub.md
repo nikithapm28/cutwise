@@ -1,4 +1,4 @@
-# ScrapSmart Reuse Hub
+# CutWise Reuse Hub
 
 ## Using the feature
 

@@ -23,7 +23,7 @@ export default function MaterialsGuide() {
     <div className="p-4 sm:p-6 max-w-[1200px] mx-auto">
       <div className="mb-6">
         <h1 className="font-display text-2xl font-bold text-[#172B21]">Materials Guide</h1>
-        <p className="text-sm text-[#64748B] mt-1">Everything you need to know before cutting each material in ScrapSmart.</p>
+        <p className="text-sm text-[#64748B] mt-1">Everything you need to know before cutting each material in CutWise.</p>
       </div>
       <div className="space-y-5">
         {MATERIALS.map((m) => (

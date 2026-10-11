@@ -206,7 +206,7 @@ export default function ScrapScanner() {
       stopCamera();
 
       setImageFile(
-        new File([blob], `scrapsmart-${Date.now()}.jpg`, {
+        new File([blob], `cutwise-${Date.now()}.jpg`, {
           type: 'image/jpeg',
         })
       );
