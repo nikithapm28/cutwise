@@ -1,21 +1,81 @@
 # CutWise
 
-## Local setup
+CutWise is a production-oriented sheet-cutting and material optimization app built for fabricators, makers, and workshop teams who want to reduce waste, plan cuts faster, and reuse scrap more effectively.
 
-1. Install dependencies with `npm ci`.
-2. Copy `.env.example` to `.env.local` and fill in the Base44 app ID and app URL from your Base44 project settings.
-3. Run `base44 dev` to start the app with its Base44 backend. Use `npm run dev` only when connecting the frontend to an already hosted backend.
+The app combines planning, optimization, AI assistance, and scrap capture in a single workflow so users can move from a material list to a validated cutting plan.
 
-The chatbot's text replies use the Base44 `Core.InvokeLLM` integration. Deploy `base44/functions/scrapsmartChat` with the app and ensure the Base44 project has LLM access and quota. Voice input and output use ElevenLabs when `ELEVENLABS_API_KEY` is set as a server-side Base44 function secret. `ELEVENLABS_VOICE_ID` is optional; the function has a default voice. Do not put either secret in `.env.local` or frontend code. Browser speech is used when ElevenLabs is unavailable.
+## Features
 
-## Figma and device features
+- Smart cut-list generation and optimization
+- Material and stock selection workflows
+- Scrap scanning and reuse tracking
+- AI assistant for planning and operational guidance
+- Saved project workflows and layout comparisons
+- Export-friendly reporting and material insights
+- Local-first experience with browser-based camera access
 
-Use Figma for the interface design and handoff, then implement that design in the React app. A Figma prototype does not run this app's React code or access its camera/chat backend. Test those features in the running app instead.
+## Tech stack
 
-Camera access requires browser permission and a secure origin: HTTPS in deployment or `localhost` during development. If the app is embedded in an iframe, the host must also allow camera access.
+- React + Vite
+- JavaScript / JSX
+- Tailwind CSS
+- Base44 SDK integration
+- Browser camera and local storage support
 
-## Checks
+## Quick start
 
-- `npm test`
-- `npm run lint`
-- `npm run build`
+1. Install dependencies:
+
+	```bash
+	npm install
+	```
+
+2. Start the app locally:
+
+	```bash
+	npm run dev -- --host 0.0.0.0
+	```
+
+3. Open the local app in your browser:
+
+	```text
+	http://localhost:5173
+	```
+
+## Build and verification
+
+Run the project checks before shipping changes:
+
+```bash
+npm test
+npm run lint
+npm run build
+```
+
+## Base44 configuration
+
+This app can run as a frontend-only local app, but Base44-powered features such as AI chat and backend integrations require environment values.
+
+Create a `.env.local` file in the project root with the following values when connecting to your Base44 project:
+
+```bash
+VITE_BASE44_APP_ID=your_app_id
+VITE_BASE44_FUNCTIONS_VERSION=latest
+VITE_BASE44_APP_BASE_URL=https://your-base44-app-url
+```
+
+If your Base44 app is not configured yet, the app can still be launched locally for frontend work, but backend-backed features will be unavailable until the app ID and Base44 URL are set.
+
+## Camera and AI notes
+
+- Camera access requires browser permission and a secure origin. `localhost` is allowed during development.
+- AI assistant behavior may fall back gracefully when Base44 backend access is unavailable.
+- Browser speech is used when voice services are not configured.
+
+## Repository notes
+
+This project is intended to be worked from its actual repo root, not the parent wrapper folder. Use the project directory containing this README when running Git commands and local development.
+
+## License
+
+This project is currently used as a client app and is not yet published under a formal open-source license.
