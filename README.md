@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ScrapSmart
 
 ## Local setup
@@ -19,3 +20,7 @@ Camera access requires browser permission and a secure origin: HTTPS in deployme
 - `npm test`
 - `npm run lint`
 - `npm run build`
+=======
+# scrapsmart
+hackru
+>>>>>>> 2f1bedcbebf1a926966a427450cf34238219935a
